@@ -1,0 +1,11 @@
+.homeLink {
+  text-decoration: none;
+  color: black;
+}
+
+.homeLink:focus {
+  color: blue;
+}
+.homeLink:hover {
+  color: blue;
+}
