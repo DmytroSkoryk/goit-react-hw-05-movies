@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/344.83670cd5.chunk.css","mappings":"AAAA,sBAEE,UAAY,CADZ,oBAEF,CAKA,wDACE,UACF","sources":["Pages/Home/Home.module.css"],"sourcesContent":[".homeLink {\n  text-decoration: none;\n  color: black;\n}\n\n.homeLink:focus {\n  color: blue;\n}\n.homeLink:hover {\n  color: blue;\n}\n"],"names":[],"sourceRoot":""}
