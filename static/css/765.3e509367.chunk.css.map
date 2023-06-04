@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/765.3e509367.chunk.css","mappings":"AAAA,2BAEE,UAAY,CADZ,oBAEF,CAKA,kEACE,UACF","sources":["components/MovieList/MovieList.module.css"],"sourcesContent":[".homeLink {\n  text-decoration: none;\n  color: black;\n}\n\n.homeLink:focus {\n  color: blue;\n}\n.homeLink:hover {\n  color: blue;\n}\n"],"names":[],"sourceRoot":""}
