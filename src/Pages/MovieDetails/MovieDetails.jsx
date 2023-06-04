@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { Link, useParams, Outlet, useLocation } from 'react-router-dom';
 import ReleaseDate from '../../components/ReleaseDate/ReleaseDate';
 import css from './MovieDetails.module.css';
+import noPhoto from '../../components/Img/no_image.jpg';
+import Services from '../../components/Services/Services';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
@@ -9,16 +11,16 @@ const MovieDetails = () => {
   const location = useLocation();
   const backLinkLokationRef = useRef(location.state?.from ?? '/');
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}?api_key=fd5362f1dc10a3ce9a04b5e02c85fcbb`
-    )
-      .then(res => res.json())
-      .then(data => {
-        setMovie(data);
-      })
-      .catch(error => {
+    const fetchMovie = async () => {
+      try {
+        const movieData = await Services.fetchMovieDetails(movieId);
+        setMovie(movieData);
+      } catch (error) {
         console.log('Error:', error);
-      });
+      }
+    };
+
+    fetchMovie();
   }, [movieId]);
 
   return (
@@ -32,7 +34,11 @@ const MovieDetails = () => {
         <>
           <div className={css.movieDetails}>
             <img
-              src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
+              src={
+                movie.poster_path
+                  ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                  : noPhoto
+              }
               alt={movie.title || movie.name}
               className={css.movieImg}
             />

@@ -9,12 +9,3 @@
   background-color: rgb(118, 202, 138);
   color: black;
 }
-.searchForm a {
-  color: black;
-  text-decoration: none;
-}
-
-.searchForm a:hover {
-  color: blue;
-  text-decoration: none;
-}

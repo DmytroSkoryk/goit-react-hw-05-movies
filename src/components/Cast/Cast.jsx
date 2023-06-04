@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
+import noPhoto from '../Img/no_image.jpg';
+import Services from '../Services/Services';
 const Cast = () => {
   const [cast, setCast] = useState(null);
   const { movieId } = useParams();
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=fd5362f1dc10a3ce9a04b5e02c85fcbb`
-    )
-      .then(res => res.json())
-      .then(data => {
-        setCast(data.cast);
-      })
-      .catch(error => {
+    const fetchCast = async () => {
+      try {
+        const castData = await Services.fetchCastDetails(movieId);
+        setCast(castData.cast);
+      } catch (error) {
         console.log('Error:', error);
-      });
+      }
+    };
+
+    fetchCast();
   }, [movieId]);
 
   if (!cast) {
@@ -27,7 +28,11 @@ const Cast = () => {
       {cast.map(actor => (
         <li key={actor.id}>
           <img
-            src={`https://image.tmdb.org/t/p/w200/${actor.profile_path}`}
+            src={
+              actor.profile_path
+                ? `https://image.tmdb.org/t/p/w200/${actor.profile_path}`
+                : noPhoto
+            }
             alt={actor.name}
             width="100"
             height="140"

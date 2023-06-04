@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Services from '../Services/Services';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState(null);
   const { movieId } = useParams();
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=fd5362f1dc10a3ce9a04b5e02c85fcbb`
-    )
-      .then(res => res.json())
-      .then(data => {
-        setReviews(data.results);
-      })
-      .catch(error => {
+    const fetchReviews = async () => {
+      try {
+        const reviewsData = await Services.fetchReviews(movieId);
+        setReviews(reviewsData.results);
+      } catch (error) {
         console.log('Error:', error);
-      });
+      }
+    };
+    fetchReviews();
   }, [movieId]);
 
   if (reviews === null) {

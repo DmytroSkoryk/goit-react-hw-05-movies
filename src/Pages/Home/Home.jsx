@@ -1,39 +1,27 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import css from './Home.module.css';
+import React, { useState, useEffect } from 'react';
+import Services from '../../components/Services/Services';
+import MovieList from '../../components/MovieList/MovieList';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
-  const location = useLocation();
-  let count = 0;
+
   useEffect(() => {
-    fetch(
-      'https://api.themoviedb.org/3/trending/movie/day?api_key=fd5362f1dc10a3ce9a04b5e02c85fcbb'
-    )
-      .then(res => res.json())
-      .then(data => {
+    async function fetchTrendingMovies() {
+      try {
+        const data = await Services.fetchTrendingMovies();
         setMovies(data.results.slice(0, 20));
-      })
-      .catch(error => {
+      } catch (error) {
         console.log('Error:', error);
-      });
+      }
+    }
+
+    fetchTrendingMovies();
   }, []);
+
   return (
     <div>
       <h1>Trending today</h1>
-      {movies.map(movie => (
-        <div key={movie.id}>
-          {(count += 1)}.{' '}
-          <Link
-            to={`/movies/${movie.id}`}
-            state={{ from: location }}
-            className={css.homeLink}
-          >
-            {movie.title || movie.name}
-          </Link>
-        </div>
-      ))}
+      <MovieList movies={movies} />
     </div>
   );
 };
