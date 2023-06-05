@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Services from '../Services/Services';
+import Services from '../../Services/Services';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState(null);

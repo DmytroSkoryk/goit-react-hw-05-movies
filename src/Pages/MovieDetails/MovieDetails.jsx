@@ -3,7 +3,7 @@ import { Link, useParams, Outlet, useLocation } from 'react-router-dom';
 import ReleaseDate from '../../components/ReleaseDate/ReleaseDate';
 import css from './MovieDetails.module.css';
 import noPhoto from '../../components/Img/no_image.jpg';
-import Services from '../../components/Services/Services';
+import Services from '../../Services/Services';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState(null);

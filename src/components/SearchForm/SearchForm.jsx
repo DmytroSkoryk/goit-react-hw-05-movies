@@ -1,19 +1,24 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import css from './SearchForm.module.css';
 
 const SearchForm = ({ onSubmit }) => {
   const [searchQuery, setSearchQuery] = useState('');
-
+  console.log();
   const handleInputChange = event => {
     setSearchQuery(event.target.value);
   };
 
   const handleFormSubmit = event => {
     event.preventDefault();
-    onSubmit(searchQuery.trim().toLowerCase());
-    setSearchQuery('');
+    if (searchQuery === '') {
+      toast.error('Please enter a movie name');
+    } else {
+      onSubmit(searchQuery.trim().toLowerCase());
+      setSearchQuery('');
+    }
   };
 
   return (

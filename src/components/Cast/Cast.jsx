@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import noPhoto from '../Img/no_image.jpg';
-import Services from '../Services/Services';
+import Services from '../../Services/Services';
 const Cast = () => {
   const [cast, setCast] = useState(null);
   const { movieId } = useParams();
