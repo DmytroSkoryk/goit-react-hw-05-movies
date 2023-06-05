@@ -3,41 +3,27 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import css from './Movies.module.css';
 import Services from '../../components/Services/Services';
 import MovieList from '../../components/MovieList/MovieList';
+import SearchForm from '../../components/SearchForm/SearchForm';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState('');
   const query = searchParams.get('query');
 
-  const handleSearch = async () => {
-    if (searchQuery.trim().toLowerCase() === '') {
+  const handleSearch = async query => {
+    if (query === '') {
       toast.error('Please enter a movie name');
     } else {
       try {
-        setSearchParams({ query: searchQuery.trim().toLowerCase() });
-        setSearchQuery('');
-
-        const data = await Services.searchMovies(
-          searchQuery.trim().toLowerCase()
-        );
+        setSearchParams({ query });
+        const data = await Services.searchMovies(query);
         setMovies(data.results);
       } catch (error) {
         console.log('Error:', error);
       }
     }
-  };
-
-  const handleInputChange = event => {
-    setSearchQuery(event.target.value);
-  };
-
-  const handleFormSubmit = event => {
-    event.preventDefault();
-    handleSearch();
   };
 
   useEffect(() => {
@@ -58,17 +44,10 @@ const Movies = () => {
   }, [query]);
 
   return (
-    <form className={css.searchForm} onSubmit={handleFormSubmit}>
-      <input
-        type="text"
-        placeholder="Enter movie name..."
-        value={searchQuery}
-        onChange={handleInputChange}
-      />
-      <button type="submit">Search</button>
-
+    <div>
+      <SearchForm onSubmit={handleSearch} />
       <MovieList movies={movies} />
-    </form>
+    </div>
   );
 };
 
